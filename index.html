@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>PML Glazing & Property Maintenance</title>
-<!-- VERSION: 2.2 -->
+<!-- VERSION: 2.3 -->
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+3:wght@400;500;600&display=swap');
   :root{--navy:#1a2744;--gold:#c9a84c;--gold-light:#e8d48f;--cream:#f9f6ef;--white:#ffffff;--text:#2c3347;--muted:#6b7280;}
@@ -113,7 +113,7 @@
   .doc-addr-lines{font-size:12.5px;line-height:1.7;color:var(--text);}
   .doc-table{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:12.5px;}
   .doc-table th{background:var(--navy);color:var(--gold);padding:9px 10px;text-align:left;font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;font-weight:600;}
-  .doc-table th:last-child,.doc-table td:last-child{text-align:right;}
+  .doc-table th:last-child,.doc-table td:last-child{text-align:right;width:120px;}.doc-table th:nth-child(2),.doc-table td:nth-child(2){width:80px;text-align:right;}.doc-table th:nth-child(3),.doc-table td:nth-child(3){width:120px;text-align:right;}
   .doc-table td{padding:9px 10px;border-bottom:1px solid #eee;vertical-align:top;}
   .doc-table tr:last-child td{border-bottom:none;}
   .doc-table tr:nth-child(even) td{background:#fafafa;}
@@ -253,7 +253,7 @@
 </div>
 </div>
 <div class="toast" id="toast"></div>
-<div style="position:fixed;bottom:4px;right:8px;font-size:10px;color:rgba(0,0,0,0.2);pointer-events:none;">v2.2</div>
+<div style="position:fixed;bottom:4px;right:8px;font-size:10px;color:rgba(0,0,0,0.2);pointer-events:none;">v2.3</div>
 
 <script>
 function getCounter(t){return parseInt(localStorage.getItem('pml_c_'+t)||'1',10);}
