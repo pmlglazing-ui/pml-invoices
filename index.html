@@ -350,8 +350,14 @@ function buildDoc(){
   const typeLabel=t==='invoice'?'INVOICE':t==='quote'?'QUOTE':'SUBCONTRACTOR INVOICE';
   const numLabel=t==='quote'?'Quote No.':'Invoice No.';
   const logoSrc=document.querySelector('.app-logo').src;
-  const companyHtml=`<div class="doc-logo-block"><img class="doc-logo" src="${logoSrc}" alt="PML Logo"/><div><div class="doc-company-name">PML Glazing &amp; Property Maintenance</div><div class="doc-company-details">Peter Lowe &bull; 95 Vicarage Drive, Dukinfield, SK16 5HZ<br>Tel: 07841 107289 &bull; Pmlglazingservices@gmail.com<br>UTR: 7994394744 &bull; NI: JB 90 56 82 C</div></div></div>`;
-  const metaHtml=`<div class="doc-type-label">${typeLabel}</div><div class="doc-meta">${docNum?`<strong>${numLabel}</strong> ${docNum}<br>`:''} ${docDate?`<strong>Date:</strong> ${docDate}<br>`:''} ${installDate&&t!=='quote'?`<strong>Works Date:</strong> ${installDate}<br>`:''} ${dueDate&&t!=='quote'?`<strong>Payment Due:</strong> ${dueDate}<br>`:''} ${jobRef?`<strong>Job Ref:</strong> ${jobRef}`:''}</div>`;
+  const companyHtml='<div class="doc-logo-block"><img class="doc-logo" src="'+logoSrc+'" alt="PML Logo"/><div><div class="doc-company-name">PML Glazing &amp; Property Maintenance</div><div class="doc-company-details">Peter Lowe &bull; 95 Vicarage Drive, Dukinfield, SK16 5HZ<br>Tel: 07841 107289 &bull; Pmlglazingservices@gmail.com<br>UTR: 7994394744 &bull; NI: JB 90 56 82 C</div></div></div>';
+  const metaHtml='<div class="doc-type-label">'+typeLabel+'</div><div class="doc-meta">'
+    +(docNum?'<strong>'+numLabel+'</strong> '+docNum+'<br>':'')
+    +(docDate?'<strong>Date:</strong> '+docDate+'<br>':'')
+    +(installDate&&t!=='quote'?'<strong>Works Date:</strong> '+installDate+'<br>':'')
+    +(dueDate&&t!=='quote'?'<strong>Payment Due:</strong> '+dueDate+'<br>':'')
+    +(jobRef?'<strong>Job Ref:</strong> '+jobRef:'')
+    +'</div>';
   let addrHtml='<div class="doc-addresses">';
   if(t==='subcontractor')addrHtml+=`<div class="doc-addr-block"><div class="doc-addr-title">To</div><div class="doc-addr-lines">${subLines.join('<br>')||'—'}</div></div>`;
   addrHtml+=`<div class="doc-addr-block"><div class="doc-addr-title">Customer</div><div class="doc-addr-lines">${custName?custName+'<br>':''}${custLines.join('<br>')||'—'}</div></div></div>`;
