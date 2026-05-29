@@ -4,6 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>PML Glazing & Property Maintenance</title>
+<!-- VERSION: 2.1 -->
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+3:wght@400;500;600&display=swap');
   :root{--navy:#1a2744;--gold:#c9a84c;--gold-light:#e8d48f;--cream:#f9f6ef;--white:#ffffff;--text:#2c3347;--muted:#6b7280;}
@@ -252,6 +253,7 @@
 </div>
 </div>
 <div class="toast" id="toast"></div>
+<div style="position:fixed;bottom:4px;right:8px;font-size:10px;color:rgba(0,0,0,0.2);pointer-events:none;">v2.1</div>
 
 <script>
 function getCounter(t){return parseInt(localStorage.getItem('pml_c_'+t)||'1',10);}
@@ -493,26 +495,24 @@ function generate(){
   document.getElementById('docBody').innerHTML=html;
   document.getElementById('printLabel').textContent='PML '+typeLabel+(docNum?' — '+docNum:'');
   document.getElementById('docOutput').classList.add('visible');
-  document.getElementById('docOutput').scrollIntoView({behavior:'smooth',block:'start'});
+  setTimeout(()=>{document.getElementById('docOutput').scrollIntoView({behavior:'smooth',block:'start'});},100);
 }
 
 function savePDF(){
-  let filename='';
-  if(_emailData&&_emailData.filename){filename=_emailData.filename;}
-  else{
-    const t=document.getElementById('docType').value;
-    const docNum=document.getElementById('docNumber').value.trim();
-    const custName=document.getElementById('custName').value.trim();
-    const safeName=(custName||'Customer').replace(/[^a-zA-Z0-9 ]/g,'').trim();
-    const docDate=document.getElementById('docDate').value;
-    const p=docDate.split('-');
-    const dateStr=p.length===3?p[2]+'-'+p[1]+'-'+p[0]:docDate;
-    filename=(docNum||'DOC')+' - '+safeName+' - '+dateStr+'.pdf';
-  }
+  // Always regenerate document with current form data first
+  const{html,typeLabel,docNum,t,custName,docDate}=buildDoc();
+  document.getElementById('docBody').innerHTML=html;
+  document.getElementById('printLabel').textContent='PML '+typeLabel+(docNum?' — '+docNum:'');
+  document.getElementById('docOutput').classList.add('visible');
+  // Build filename
+  const safeName=(custName||'Customer').replace(/[^a-zA-Z0-9 ]/g,'').trim();
+  const p=(docDate||'').split('/');
+  const dateStr=p.length===3?p[0]+'-'+p[1]+'-'+p[2]:new Date().toLocaleDateString('en-GB').replace(/\//g,'-');
+  const filename=(docNum||'DOC')+' - '+safeName+' - '+dateStr+'.pdf';
   const origTitle=document.title;
   document.title=filename.replace('.pdf','');
-  window.print();
-  setTimeout(()=>{document.title=origTitle;},1000);
+  setTimeout(()=>{window.print();},200);
+  setTimeout(()=>{document.title=origTitle;},1500);
 }
 
 addItem();
