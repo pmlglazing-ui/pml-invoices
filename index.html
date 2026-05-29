@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>PML Glazing & Property Maintenance</title>
-<!-- VERSION: 2.4 -->
+<!-- VERSION: 2.6 -->
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+3:wght@400;500;600&display=swap');
   :root{--navy:#1a2744;--gold:#c9a84c;--gold-light:#e8d48f;--cream:#f9f6ef;--white:#ffffff;--text:#2c3347;--muted:#6b7280;}
@@ -257,7 +257,7 @@
 </div>
 </div>
 <div class="toast" id="toast"></div>
-<div style="position:fixed;bottom:4px;right:8px;font-size:10px;color:rgba(0,0,0,0.2);pointer-events:none;">v2.4</div>
+<div style="position:fixed;bottom:4px;right:8px;font-size:10px;color:rgba(0,0,0,0.2);pointer-events:none;">v2.6</div>
 
 <script>
 function getCounter(t){return parseInt(localStorage.getItem('pml_c_'+t)||'1',10);}
@@ -368,12 +368,12 @@ function buildDoc(){
   if(t==='subcontractor')addrHtml+=`<div class="doc-addr-block"><div class="doc-addr-title">To</div><div class="doc-addr-lines">${subLines.join('<br>')||'—'}</div></div>`;
   addrHtml+=`<div class="doc-addr-block"><div class="doc-addr-title">Customer</div><div class="doc-addr-lines">${custName?custName+'<br>':''}${custLines.join('<br>')||'—'}</div></div></div>`;
   let tableHtml='<table class="doc-table"><thead><tr>';
-  if(t!=='quote')tableHtml+='<th>Install Date</th><th>Description</th><th style="text-align:right">Amount</th>';
+  if(t!=='quote')tableHtml+='<th style="width:110px">Install Date</th><th>Description</th><th style="text-align:right;width:110px">Amount</th>';
   else tableHtml+='<th>Description</th><th style="text-align:right">Qty</th><th style="text-align:right">Unit Price</th><th style="text-align:right">Amount</th>';
   tableHtml+='</tr></thead><tbody>';
   if(!items.length)tableHtml+=`<tr><td colspan="3" style="color:#999;text-align:center;padding:20px;">No items added.</td></tr>`;
   else items.forEach(item=>{
-    if(t!=='quote')tableHtml+=`<tr><td>${installDate||''}</td><td>${item.desc}</td><td>${item.amount>0?fmtMoney(item.amount):''}</td></tr>`;
+    if(t!=='quote')tableHtml+=`<tr><td style="width:110px;white-space:nowrap">${installDate||''}</td><td>${item.desc}</td><td style="width:110px;text-align:right">${item.amount>0?fmtMoney(item.amount):''}</td></tr>`;
     else tableHtml+=`<tr><td>${item.desc}</td><td>${item.qty||''}</td><td>${item.unitprice?fmtMoney(item.unitprice):''}</td><td>${item.amount>0?fmtMoney(item.amount):''}</td></tr>`;
   });
   const cols=t!=='quote'?2:3;
@@ -453,7 +453,7 @@ function openEmailModal(){
   const subject='PML Glazing & Property Maintenance — '+typeLabel+(docNum?' '+docNum:'');
   const body=buildEmailBody(t,custName,docNum,dueDate,total);
   const safeName=(custName||'Customer').replace(/[^a-zA-Z0-9 ]/g,'').trim();
-  const dateStr=docDate||new Date().toLocaleDateString('en-GB').replace(/\//g,'-');
+  const dateStr=(docDate||new Date().toLocaleDateString('en-GB')).replace(/\//g,'.');
   const filename=(docNum||'DOC')+' - '+safeName+' - '+dateStr+'.pdf';
   const folder=t==='invoice'?'📁 Invoices':t==='subcontractor'?'📁 Subcontractor Invoices':'📁 Quotes';
   _emailData={subject,body,custEmail,filename,folder,t};
@@ -529,7 +529,7 @@ function savePDF(){
   // Build filename
   const safeName=(custName||'Customer').replace(/[^a-zA-Z0-9 ]/g,'').trim();
   const p=(docDate||'').split('/');
-  const dateStr=p.length===3?p[0]+'-'+p[1]+'-'+p[2]:new Date().toLocaleDateString('en-GB').replace(/\//g,'-');
+  const dateStr=p.length===3?p[0]+'.'+p[1]+'.'+p[2]:new Date().toLocaleDateString('en-GB').replace(/\//g,'.');
   const filename=(docNum||'DOC')+' - '+safeName+' - '+dateStr+'.pdf';
   const origTitle=document.title;
   document.title=filename.replace('.pdf','');
