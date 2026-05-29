@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>PML Glazing & Property Maintenance</title>
-<!-- VERSION: 2.1 -->
+<!-- VERSION: 2.2 -->
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+3:wght@400;500;600&display=swap');
   :root{--navy:#1a2744;--gold:#c9a84c;--gold-light:#e8d48f;--cream:#f9f6ef;--white:#ffffff;--text:#2c3347;--muted:#6b7280;}
@@ -253,7 +253,7 @@
 </div>
 </div>
 <div class="toast" id="toast"></div>
-<div style="position:fixed;bottom:4px;right:8px;font-size:10px;color:rgba(0,0,0,0.2);pointer-events:none;">v2.1</div>
+<div style="position:fixed;bottom:4px;right:8px;font-size:10px;color:rgba(0,0,0,0.2);pointer-events:none;">v2.2</div>
 
 <script>
 function getCounter(t){return parseInt(localStorage.getItem('pml_c_'+t)||'1',10);}
@@ -346,7 +346,7 @@ function buildDoc(){
     const amount=parseFloat(document.getElementById('amount-'+id)?.value)||0;
     const qty=document.getElementById('qty-'+id)?.value||'';
     const unitprice=document.getElementById('unitprice-'+id)?.value||'';
-    if(desc||amount)items.push({desc,amount,idate,qty,unitprice});
+    if(desc||amount)items.push({desc,amount,qty,unitprice});
   });
   const total=items.reduce((s,i)=>s+i.amount,0);
   const typeLabel=t==='invoice'?'INVOICE':t==='quote'?'QUOTE':'SUBCONTRACTOR INVOICE';
