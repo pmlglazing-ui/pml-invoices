@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>PML Glazing & Property Maintenance</title>
-<!-- VERSION: 2.3 -->
+<!-- VERSION: 2.4 -->
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+3:wght@400;500;600&display=swap');
   :root{--navy:#1a2744;--gold:#c9a84c;--gold-light:#e8d48f;--cream:#f9f6ef;--white:#ffffff;--text:#2c3347;--muted:#6b7280;}
@@ -224,8 +224,12 @@
       <div class="save-hint">
         <div class="save-hint-title">&#x1F4BE; Step 1 &mdash; Save the PDF first</div>
         <div class="save-hint-steps">
-          Click <strong>Save as PDF</strong> on the document below. Chrome will suggest this filename &mdash; keep it:<br>
-          <span class="suggested-filename" id="suggested-filename">INV-0001 - Customer - 29-05-2025.pdf</span><br>
+          Click <strong>Save as PDF</strong> on the document below, then paste the filename into the Save dialog:<br>
+          <div style="display:flex;align-items:center;gap:8px;margin:8px 0;">
+            <span class="suggested-filename" id="suggested-filename">INV-0001 - Customer - 29-05-2025.pdf</span>
+            <button onclick="copyFilename()" id="btn-copy-fname" style="background:var(--gold);color:var(--navy);border:none;border-radius:6px;padding:6px 12px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;">&#x1F4CB; Copy</button>
+          </div>
+          <span style="color:rgba(255,255,255,.5);font-size:11.5px;">&#x2460; Click Copy &nbsp; &#x2461; Click Save as PDF &nbsp; &#x2462; Press Ctrl+V in the filename box</span><br><br>
           Save it to Pete's <strong id="folder-hint">&#x1F4C1; Invoices</strong> folder on the desktop.
         </div>
       </div>
@@ -253,7 +257,7 @@
 </div>
 </div>
 <div class="toast" id="toast"></div>
-<div style="position:fixed;bottom:4px;right:8px;font-size:10px;color:rgba(0,0,0,0.2);pointer-events:none;">v2.3</div>
+<div style="position:fixed;bottom:4px;right:8px;font-size:10px;color:rgba(0,0,0,0.2);pointer-events:none;">v2.4</div>
 
 <script>
 function getCounter(t){return parseInt(localStorage.getItem('pml_c_'+t)||'1',10);}
@@ -475,6 +479,24 @@ function doOpenGmail(){
     +'&su='+encodeURIComponent(subject)
     +'&body='+encodeURIComponent(body);
   window.open(gmailUrl,'_blank');
+}
+
+function copyFilename(){
+  const fname = document.getElementById('suggested-filename').textContent;
+  navigator.clipboard.writeText(fname).then(()=>{
+    const btn = document.getElementById('btn-copy-fname');
+    const orig = btn.innerHTML;
+    btn.innerHTML = '&#x2714; Copied!';
+    btn.style.background = '#2ecc71';
+    setTimeout(()=>{ btn.innerHTML = orig; btn.style.background = 'var(--gold)'; }, 2500);
+  }).catch(()=>{
+    const ta=document.createElement('textarea');
+    ta.value=fname; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    const btn=document.getElementById('btn-copy-fname');
+    btn.innerHTML='&#x2714; Copied!';
+    setTimeout(()=>{ btn.innerHTML='&#x1F4CB; Copy'; },2500);
+  });
 }
 
 function copyBody(){
